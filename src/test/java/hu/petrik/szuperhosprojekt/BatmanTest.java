@@ -43,6 +43,8 @@ class BatmanTest {
         batman.kutyutKeszit();
         batman.kutyutKeszit();
         batman.kutyutKeszit();
+        System.out.println(batman.mekkoraAzEreje());
+        System.out.println(new SzuperhosMock().mekkoraAzEreje());
         assertFalse(batman.legyoziE(new SzuperhosMock()));
         batman.kutyutKeszit();
         assertTrue(batman.legyoziE(new SzuperhosMock()));
