@@ -1,0 +1,52 @@
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.layout.StackPane;
+import javafx.scene.text.Text;
+import javafx.stage.Stage;
+import javafx.util.Duration;
+
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
+
+public class CountdownTimer extends Application {
+
+    @Override
+    public void start(Stage primaryStage) {
+        // Target date and time
+        LocalDateTime targetDateTime = LocalDateTime.of(2024, 12, 25, 0, 0); // Example: Christmas 2024
+
+        // UI elements
+        Text countdownText = new Text("00:00:00");
+        StackPane root = new StackPane(countdownText);
+        Scene scene = new Scene(root, 300, 200);
+
+        // Timeline for the countdown
+        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
+            LocalDateTime now = LocalDateTime.now();
+            long secondsRemaining = ChronoUnit.SECONDS.between(now, targetDateTime);
+
+            if (secondsRemaining <= 0) {
+                countdownText.setText("Time's up!");
+            } else {
+                long hours = secondsRemaining / 3600;
+                long minutes = (secondsRemaining % 3600) / 60;
+                long seconds = secondsRemaining % 60;
+
+                countdownText.setText(String.format("%02d:%02d:%02d", hours, minutes, seconds));
+            }
+        }));
+
+        timeline.setCycleCount(Timeline.INDEFINITE);
+        timeline.play();
+
+        primaryStage.setScene(scene);
+        primaryStage.setTitle("Countdown Timer");
+        primaryStage.show();
+    }
+
+    public static void main(String[] args) {
+        launch(args);
+    }
+}
